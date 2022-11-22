@@ -1,0 +1,38 @@
+node {
+ 	// Clean workspace before doing anything
+ 
+
+    pipeline {
+        stages ('Clone') {
+        	checkout scm
+        }
+        stage ('Build ak') {
+        	sh "echo 'shell scripts to build project...by Akaderby Akader'"
+        }
+        stage ('Tests ak') {
+	        parallel 'static': {
+	            sh "echo 'shell scripts to run static tests..by Akader."
+	        },
+	        'unit': {
+	            sh "echo 'shell scripts to run unit tests...by Akader'"
+	        },
+	        'integration': {
+	            sh "echo 'shell scripts to run integration tests..by Akader.'"
+	        }
+        }
+      	stage ('Deploy') {
+            sh "echo 'shell scripts to deploy to server...by Akader'"
+      	}
+    } catch (err) {
+        currentBuild.result = 'FAILED'
+        throw err
+    }
+    	stage ('Hello from Kader') {
+             steps {
+            sh "echo 'shell scripts to deploy to server...by Akader'"
+            }
+      	}
+}
+
+
+
